@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HTML-6X - Revolutionary Web Development</title>
+
+  <meta name="description" content="Single-file web applications with atomic components, declarative data, and security by design.">
+  
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' 'unsafe-inline';
+                 style-src 'self' 'unsafe-inline';
+                 object-src 'none';
+                 base-uri 'none'">
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --border: #334155;
+      --fg: #f1f5f9;
+      --fg-muted: #94a3b8;
+      --primary: #3b82f6;
+      --success: #10b981;
+      --accent: #38bdf8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      text-align: center;
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline {
+      font-size: 1.5rem;
+      color: var(--fg-muted);
+      margin-bottom: 2rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--fg);
+      border: 1px solid var(--border);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+
+    .feature {
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature p {
+      color: var(--fg-muted);
+    }
+
+    .demo-section {
+      margin: 4rem 0;
+      padding: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+    }
+
+    .demo-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .demo-card {
+      padding: 1.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .demo-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+    }
+
+    .demo-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .demo-card p {
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+    }
+
+    .code-comparison {
+      margin: 4rem 0;
+    }
+
+    .code-comparison h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .code-block {
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+    }
+
+    .code-block h3 {
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    pre {
+      background: var(--bg);
+      padding: 1rem;
+      border-radius: 0.25rem;
+      overflow-x: auto;
+      font-size: 0.875rem;
+    }
+
+    code {
+      font-family: 'Monaco', 'Courier New', monospace;
+      color: var(--fg);
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 3rem 0;
+      padding: 2rem;
+      background: var(--surface);
+      border-radius: 0.5rem;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      color: var(--fg-muted);
+      text-transform: uppercase;
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--fg-muted);
+    }
+
+    .links {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .links a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="logo">⚛️</div>
+    <h1>HTML-6X</h1>
+    <p class="tagline">Revolutionary Web Development</p>
+    <p style="color: var(--fg-muted); margin-bottom: 2rem;">
+      Single-file web applications with atomic components, declarative data, and security by design.
+    </p>
+    
+    <div class="cta-buttons">
+      <a href="demo-app.html" class="btn btn-primary">🚀 Try Live Demo</a>
+      <a href="GETTING-STARTED.md" class="btn btn-secondary">📖 Get Started</a>
+      <a href="https://github.com/yourusername/html-6x" class="btn btn-secondary">⭐ GitHub</a>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">20KB</div>
+      <div class="stat-label">Runtime Size</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">0</div>
+      <div class="stat-label">Dependencies</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">1</div>
+      <div class="stat-label">File Needed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">0s</div>
+      <div class="stat-label">Build Time</div>
+    </div>
+  </div>
+
+  <section class="features">
+    <div class="feature">
+      <div class="feature-icon">🔒</div>
+      <h3>Security First</h3>
+      <p>Built-in XSS prevention, strict CSP enforcement, no eval(), and memory-safe operations by default.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">📦</div>
+      <h3>Single File</h3>
+      <p>Entire application in one HTML file. No build process, no dependencies, works offline immediately.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <h3>Lightning Fast</h3>
+      <p>< 100ms load time, 60 FPS rendering, minimal memory footprint. Performance is built-in.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <h3>Declarative</h3>
+      <p>Define data in JSON, compose UI with atoms. No imperative code needed for common tasks.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🧪</div>
+      <h3>Atomic Design</h3>
+      <p>Predefined, tested components: tables, forms, cards, stats, lists. Composable and consistent.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🌐</div>
+      <h3>Standards Based</h3>
+      <p>Built on web fundamentals. Works with all modern browsers. Path to standardization.</p>
+    </div>
+  </section>
+
+  <section class="code-comparison">
+    <h2>Why HTML-6X?</h2>
+    
+    <div class="comparison-grid">
+      <div class="code-block">
+        <h3>❌ Traditional Approach</h3>
+        <pre><code>// React TODO App
+├── node_modules/ (200MB)
+├── src/
+│   ├── components/ (15 files)
+│   ├── hooks/ (5 files)
+│   ├── utils/ (8 files)
+├── package.json
+├── webpack.config.js
+└── babel.config.js
+
+Total: 28 files, 200MB
+Build time: 30 seconds</code></pre>
+      </div>
+
+      <div class="code-block">
+        <h3>✅ HTML-6X Approach</h3>
+        <pre><code>// HTML-6X TODO App
+&lt;h6x-app name="TODO"&gt;
+  &lt;h6x-data name="tasks"&gt;
+    [{"id": 1, "title": "Learn H6X"}]
+  &lt;/h6x-data&gt;
+  
+  &lt;h6x-atom type="list" source="tasks"&gt;
+  &lt;/h6x-atom&gt;
+&lt;/h6x-app&gt;
+
+Total: 1 file, 5KB
+Build time: 0 seconds</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h2>🎮 Live Demos</h2>
+    <p style="text-align: center; color: var(--fg-muted); margin-bottom: 2rem;">
+      See HTML-6X in action with these working applications
+    </p>
+
+    <div class="demo-grid">
+      <a href="demo-app.html" class="demo-card">
+        <h3>📊 Admin Dashboard</h3>
+        <p>Complete admin panel with tables, stats, forms, and computed data. Shows all core features.</p>
+      </a>
+
+      <a href="task-manager-app.html" class="demo-card">
+        <h3>✅ Task Manager</h3>
+        <p>Advanced task management system with filtering, sorting, and team collaboration features.</p>
+      </a>
+
+      <a href="test-suite.html" class="demo-card">
+        <h3>🧪 Test Suite</h3>
+        <p>Automated testing framework demonstrating runtime reliability and security features.</p>
+      </a>
+
+      <a href="HTML-6X-SPECIFICATION.md" class="demo-card">
+        <h3>📖 Full Specification</h3>
+        <p>Complete technical documentation including syntax, security model, and best practices.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="code-comparison">
+    <h2>⚡ Quick Example</h2>
+    
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="code-block">
+        <h3>Build a Dashboard in 30 Lines</h3>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;My Dashboard&lt;/title&gt;
+  &lt;script src="h6x-runtime.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h6x-app name="Dashboard" mode="deterministic"&gt;
+  
+  &lt;!-- Define your data --&gt;
+  &lt;h6x-data name="users"&gt;
+    [
+      {"id": 1, "name": "Alice", "active": true},
+      {"id": 2, "name": "Bob", "active": false}
+    ]
+  &lt;/h6x-data&gt;
+
+  &lt;!-- Layout it out --&gt;
+  &lt;h6x-layout type="dashboard"&gt;
+    &lt;h6x-panel slot="main"&gt;
+      
+      &lt;!-- Show statistics --&gt;
+      &lt;h6x-atom type="stat" compute="users.count" label="Total Users"&gt;
+      &lt;/h6x-atom&gt;
+      
+      &lt;!-- Display the data --&gt;
+      &lt;h6x-atom type="table" source="users"&gt;
+      &lt;/h6x-atom&gt;
+      
+    &lt;/h6x-panel&gt;
+  &lt;/h6x-layout&gt;
+
+&lt;/h6x-app&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        <p style="margin-top: 1rem; color: var(--fg-muted);">
+          That's it! Open in browser and it just works. No npm install, no webpack, no build process.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="links">
+      <a href="README.md">Documentation</a>
+      <a href="HTML-6X-SPECIFICATION.md">Specification</a>
+      <a href="GETTING-STARTED.md">Tutorial</a>
+      <a href="https://github.com/yourusername/html-6x">GitHub</a>
+    </div>
+    <p>Built with ❤️ for developers who value simplicity, security, and speed.</p>
+    <p style="margin-top: 0.5rem; font-size: 0.875rem;">HTML-6X v0.1.0 • MIT License</p>
+  </footer>
+</div>
+
+</body>
+</html>
